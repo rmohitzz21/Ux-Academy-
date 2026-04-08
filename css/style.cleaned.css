@@ -1,0 +1,242 @@
+/* ==================================================
+   PIXEL-PERFECT, CONSOLIDATED CSS
+   - Keeps your visual intent
+   - Fixes variables, conflicts, invalid rules
+   - Groups by section in logical order
+   - Mobile-first + responsive refinements
+   ================================================== */
+
+:root {
+  --glass: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.15);
+  --primary: #5b6cff;
+  --text-muted: #9ca3af;
+  --bg-dark: #01010D;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+  background: var(--bg-dark);
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Navbar removed to resolve mobile priority conflict with style.css */
+
+/* ==================================================
+   BUTTON SYSTEM
+   ================================================== */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 34px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #6f7cff, #4c56e0);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(111, 75, 255, 0.35);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 34px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #e2e8f0;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ==================================================
+   HERO SECTION
+   ================================================== */
+
+.hero-content {
+  max-width: 1200px;
+  margin: auto;
+  padding: 160px 20px 120px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+}
+
+.hero-title {
+  font-size: 64px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  max-width: 880px;
+}
+
+.hero-description {
+  max-width: 620px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 14px;
+}
+
+/* ==================================================
+   WHAT YOU GET SECTION
+   ================================================== */
+
+.what-you-get-grid {
+  max-width: 1200px;
+  margin: 50px auto 0;
+
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 56px;
+  align-items: stretch;
+
+  padding: 48px;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.what-you-get-divider {
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.3), transparent);
+}
+
+.what-you-get-column {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  gap: 28px;
+}
+
+.get-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 26px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+}
+
+.check-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: #674bc9;
+  font-weight: 700;
+}
+
+.get-text h4 {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.get-text p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* ==================================================
+   FOOTER
+   ================================================== */
+
+.site-footer {
+  margin-top: 120px;
+  background: linear-gradient(120deg, #59168b, #1c398e, #59168b);
+  padding: 70px 20px 40px;
+  text-align: center;
+}
+
+.footer-links {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.footer-links a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* ==================================================
+   RESPONSIVE TUNING
+   ================================================== */
+
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 120px 20px 80px;
+  }
+
+  .hero-title {
+    font-size: 38px;
+  }
+
+  .what-you-get-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .what-you-get-divider {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 30px;
+  }
+
+  .btn-primary,
+  .btn-outline {
+    width: 100%;
+  }
+
+  .hero-buttons {
+    width: 100%;
+    flex-direction: column;
+  }
+}
