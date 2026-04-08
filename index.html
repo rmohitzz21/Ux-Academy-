@@ -345,11 +345,10 @@
           <div class="pricing">
             <h3>Pricing</h3>
             <div class="price">
-              <span class="current">₹50,000</span>
-              <span class="old">₹1,00,000</span>
+              <span class="" style="font-size: 20px;">Want to know the program fee?</span>
             </div>
-            <p class="note">(Early Bird Registration *inclusive of GST)</p>
-            <button class="btn-primary" id="applyNowBtnPricing">Apply Now</button>
+            <p class="note">This is a curated program. Pricing is shared after application.</p>
+            <button class="btn-primary" id="applyNowBtnPricing">Unlock Pricing</button>
           </div>
 
         </div>
@@ -786,6 +785,192 @@
     </div>
   </footer>
 
+  <!-- Unlock Pricing Modal -->
+  <div class="pricing-modal-overlay" id="pricingModalOverlay">
+    <div class="pricing-modal glass-modal" id="pricingModal">
+      <button class="close-btn" id="closePricingModal">×</button>
+      
+      <h2>Unlock Program Pricing</h2>
+      <p class="subtitle">Share your profile and we'll connect when opportunities arise.</p>
+      
+      <form id="pricingForm" class="pricing-form">
+        <div class="pricing-form-row">
+          <div class="form-group">
+            <input type="text" class="pricing-input" placeholder="Enter your name here" required />
+          </div>
+          <div class="form-group">
+            <input type="email" class="pricing-input" placeholder="Enter your email address" required />
+          </div>
+        </div>
+        
+        <div class="pricing-form-row">
+          <div class="form-group">
+            <select class="pricing-select modal-select" required>
+              <option value="" disabled selected>Select</option>
+              <option value="student">Student</option>
+              <option value="professional">Professional</option>
+              <option value="fresher">Fresher</option>
+              <option value="career-change">Career Change</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <select class="pricing-select modal-select" required>
+              <option value="" disabled selected>Select Your Goal</option>
+              <option value="learn-uiux">Learn UI/UX Design</option>
+              <option value="career-switch">Career Switch to Design</option>
+              <option value="improve-skills">Improve Existing Skills</option>
+              <option value="freelance">Start Freelancing</option>
+              <option value="job-ready">Get Job Ready</option>
+            </select>
+          </div>
+        </div>
+        
+        <button type="submit" class="submit-btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    /* Pricing Modal Overlay */
+    .pricing-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .pricing-modal-overlay.active {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Pricing Modal - Using Glass Modal Style */
+    .pricing-modal {
+      width: min(92%, 720px) !important;
+      padding: 40px !important;
+      max-width: none;
+    }
+
+    .pricing-modal h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .pricing-modal .subtitle {
+      text-align: center;
+      color: #b5b5b5;
+      font-size: 15px;
+      margin-bottom: 30px;
+    }
+
+    /* Pricing Form */
+    .pricing-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .pricing-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 0;
+    }
+
+    .pricing-form .form-group {
+      margin-bottom: 18px;
+    }
+
+    .pricing-input,
+    .pricing-select {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .pricing-input::placeholder {
+      color: #aaa;
+    }
+
+    .pricing-input:focus,
+    .pricing-select:focus {
+      outline: none;
+      border-color: #7f5cff;
+    }
+
+    .pricing-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23aaa' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      cursor: pointer;
+      padding-right: 40px;
+    }
+
+    .pricing-select option {
+      background: #141414;
+      color: #fff;
+    }
+
+    /* Submit Button */
+    .pricing-form .submit-btn {
+      margin-top: 16px;
+      width: 100%;
+      padding: 14px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #7f5cff, #5a3df0);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .pricing-form .submit-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .pricing-form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pricing-modal {
+        padding: 28px 22px !important;
+      }
+
+      .pricing-modal h2 {
+        font-size: 26px;
+      }
+
+      .pricing-modal .subtitle {
+        font-size: 14px;
+      }
+    }
+  </style>
+
   <script src="js/main.js"></script>
   <!-- Added animated hero JavaScript -->
   <script src="js/animated-hero.js"></script>
@@ -796,6 +981,49 @@
     toggle.addEventListener("click", () => {
       menu.classList.toggle("show");
     });
+
+    // Pricing Modal Functionality
+    const pricingModalOverlay = document.getElementById('pricingModalOverlay');
+    const pricingModal = document.getElementById('pricingModal');
+    const closePricingModalBtn = document.getElementById('closePricingModal');
+    const applyNowBtnPricing = document.getElementById('applyNowBtnPricing');
+    const pricingForm = document.getElementById('pricingForm');
+
+    // Open modal
+    if (applyNowBtnPricing) {
+      applyNowBtnPricing.addEventListener('click', (e) => {
+        e.preventDefault();
+        pricingModalOverlay.classList.add('active');
+        pricingModal.classList.add('active');
+      });
+    }
+
+    // Close modal
+    if (closePricingModalBtn) {
+      closePricingModalBtn.addEventListener('click', () => {
+        pricingModalOverlay.classList.remove('active');
+        pricingModal.classList.remove('active');
+      });
+    }
+
+    // Close when clicking overlay
+    pricingModalOverlay.addEventListener('click', (e) => {
+      if (e.target === pricingModalOverlay) {
+        pricingModalOverlay.classList.remove('active');
+        pricingModal.classList.remove('active');
+      }
+    });
+
+    // Handle form submission
+    if (pricingForm) {
+      pricingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you! We will contact you soon with pricing details.');
+        pricingModalOverlay.classList.remove('active');
+        pricingModal.classList.remove('active');
+        pricingForm.reset();
+      });
+    }
   </script>
 </body>
 

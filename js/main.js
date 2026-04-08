@@ -150,9 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   const openBtns = [
-    document.getElementById("openModal"),
-    document.getElementById("applyNowBtnPricing"),
-    document.getElementById("applyCourseBtn")
+    document.getElementById("openModal")
   ];
   const closeBtn = document.getElementById("closeModal");
   const modal = document.getElementById("glassModal");
