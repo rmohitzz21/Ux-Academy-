@@ -136,6 +136,26 @@ document.addEventListener('DOMContentLoaded', function() {
             slider.style.animationPlayState = 'running';
         });
     }
+
+    // Infinite Testimonials Loop
+    const reviewsGrid = document.querySelector('.reviews-grid');
+    const originalCardSet = document.getElementById('original-cards');
+
+    if (reviewsGrid && originalCardSet) {
+        // Duplicate the card set for infinite scrolling
+        const clone = originalCardSet.cloneNode(true);
+        clone.id = '';  // Remove ID from clone to avoid duplicates
+        reviewsGrid.appendChild(clone);
+
+        // Pause animation on hover
+        reviewsGrid.addEventListener('mouseenter', () => {
+            reviewsGrid.style.animationPlayState = 'paused';
+        });
+
+        reviewsGrid.addEventListener('mouseleave', () => {
+            reviewsGrid.style.animationPlayState = 'running';
+        });
+    }
     
     // CTA Button Click Animation
     document.querySelectorAll('.btn-primary-gradient, .btn-primary, .program-cta').forEach(btn => {
