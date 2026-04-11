@@ -198,17 +198,172 @@ document.addEventListener('DOMContentLoaded', function() {
   if (applicationForm) {
     applicationForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      // Logic to actually submit form via fetch could go here.
-      // For now, simulate success:
-      const btn = applicationForm.querySelector('button[type="submit"]');
-      const originalText = btn.innerText;
-      btn.innerText = "Application Submitted!";
-      btn.style.background = "#22c55e"; // Success green color
-      setTimeout(() => {
-        closeModal();
-        applicationForm.reset();
-        btn.innerText = originalText;
-        btn.style.background = ""; // Reset to gradient
-      }, 2000);
+      submitApplicationForm(applicationForm);
     });
   }
+
+  // Contact Form Handler (for contact.php)
+  const contactForm = document.querySelector('.contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      submitContactForm(contactForm);
+    });
+  }
+});
+
+/**
+ * Submit application form via AJAX
+ */
+function submitApplicationForm(form) {
+  const btn = form.querySelector('button[type="submit"]');
+  const originalText = btn.innerText;
+
+  // Disable button and show loading state
+  btn.disabled = true;
+  btn.innerText = "Submitting...";
+
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+
+  fetch('/Ux/Ux-Academy-/backend/contact_handler.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      btn.innerText = "Application Submitted!";
+      btn.style.background = "#22c55e";
+      setTimeout(() => {
+        closeModal();
+        form.reset();
+        btn.innerText = originalText;
+        btn.style.background = "";
+        btn.disabled = false;
+      }, 2000);
+    } else {
+      // Show errors
+      displayFormErrors(form, data.errors);
+      btn.innerText = originalText;
+      btn.disabled = false;
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    btn.innerText = "Error - Try Again";
+    btn.style.background = "#ef4444";
+    setTimeout(() => {
+      btn.innerText = originalText;
+      btn.style.background = "";
+      btn.disabled = false;
+    }, 2000);
+  });
+}
+
+/**
+ * Submit contact form via AJAX
+ */
+function submitContactForm(form) {
+  const btn = form.querySelector('button[type="submit"]');
+  const messageDiv = form.querySelector('[class*="message"]') || form.parentElement.querySelector('[class*="message"]');
+  const originalText = btn.innerText;
+
+  // Disable button and show loading state
+  btn.disabled = true;
+  btn.innerText = "Sending...";
+
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+
+  fetch('/Ux/Ux-Academy-/backend/contact_handler.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.success) {
+      btn.innerText = "Message Sent!";
+      btn.style.background = "#22c55e";
+
+      if (messageDiv) {
+        messageDiv.style.color = '#22c55e';
+        messageDiv.innerHTML = 'Thank you! Your message has been received.';
+        messageDiv.style.display = 'block';
+      }
+
+      setTimeout(() => {
+        form.reset();
+        btn.innerText = originalText;
+        btn.style.background = "";
+        btn.disabled = false;
+        if (messageDiv) {
+          messageDiv.style.display = 'none';
+          messageDiv.innerHTML = '';
+        }
+      }, 3000);
+    } else {
+      // Show errors
+      displayFormErrors(form, result.errors);
+      btn.innerText = originalText;
+      btn.disabled = false;
+
+      if (messageDiv) {
+        messageDiv.style.color = '#ef4444';
+        messageDiv.innerHTML = result.message || 'Validation failed';
+        messageDiv.style.display = 'block';
+      }
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    btn.innerText = "Error - Try Again";
+    btn.style.background = "#ef4444";
+
+    if (messageDiv) {
+      messageDiv.style.color = '#ef4444';
+      messageDiv.innerHTML = 'An error occurred. Please try again.';
+      messageDiv.style.display = 'block';
+    }
+
+    setTimeout(() => {
+      btn.innerText = originalText;
+      btn.style.background = "";
+      btn.disabled = false;
+    }, 2000);
+  });
+}
+
+/**
+ * Display form validation errors
+ */
+function displayFormErrors(form, errors) {
+  if (!errors || Object.keys(errors).length === 0) {
+    return;
+  }
+
+  // Clear previous errors
+  form.querySelectorAll('.error-message').forEach(el => el.remove());
+  form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+
+  // Display new errors
+  for (const [field, message] of Object.entries(errors)) {
+    const input = form.querySelector(`[name="${field}"]`);
+    if (input) {
+      input.classList.add('input-error');
+      const errorMsg = document.createElement('div');
+      errorMsg.className = 'error-message';
+      errorMsg.textContent = message;
+      errorMsg.style.color = '#ef4444';
+      errorMsg.style.fontSize = '12px';
+      errorMsg.style.marginTop = '5px';
+      input.parentElement.appendChild(errorMsg);
+    }
+  }
+}
